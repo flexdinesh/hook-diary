@@ -19,3 +19,26 @@ If you want to add your hook to this repo, create a PR with the following info.
 3. Add your name and twitter/github handles as comments at the end of the file.
 4. Add your hook name and code in `README.md` file. Refer to other hooks and follow the same approach.
 
+## Hooks
+
+1. [useFormField](#useFormField)
+
+### useFormField
+
+Author - [Dinesh Pandiyan](https://github.com/flexdinesh)
+
+```js
+import { useState } from 'react';
+
+function useFormField(initialVal = '') {
+  const [val, setVal] = useState(initialVal);
+
+  function onChange(e) {
+    setVal(e.target.value);
+  }
+
+  return [val, onChange];
+}
+
+export default useFormField;
+```
