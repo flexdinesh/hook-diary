@@ -22,6 +22,7 @@ If you want to add your hook to this repo, create a PR with the following info.
 ## Hooks
 
 1. [useFormField](#useFormField)
+2. [useLoading](#useLoading)
 
 ### useFormField
 
@@ -41,4 +42,31 @@ function useFormField(initialVal = '') {
 }
 
 export default useFormField;
+```
+
+### useLoading
+
+Utility to wrap async calls and get their loading status.
+
+Author - [Shawn Wang](https://github.com/sw-yx)
+
+```js
+export default function useLoading() {
+  const [isLoading, setState] = React.useState(false);
+
+  const load = aPromise => {
+    setState(true);
+    return aPromise
+    .then((...args) => {
+      setState(false);
+      return Promise.resolve(...args);
+    })
+    .catch((...args) => {
+      setState(false);
+      return Promise.reject(...args);
+    })
+  }
+
+  return [isLoading, load];
+}
 ```
