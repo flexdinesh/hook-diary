@@ -23,6 +23,8 @@ If you want to add your hook to this repo, create a PR with the following info.
 
 1. [useFormField](#useFormField)
 2. [useLoading](#useLoading)
+3. [useWindowWidth](#useWindowWidth)
+4. [useInterval](#useInterval)
 
 ### useFormField
 
@@ -90,3 +92,36 @@ export default function useWindowWidth() {
   return windowWidth;
 }
 ```
+
+### useInterval
+
+Invoke a function after a specified interval
+
+Author - [Dan Abramov](https://twitter.com/dan_abramov)
+
+```js
+export default function useInterval(callback, delay) {
+  const savedCallback = React.useRef();
+
+  // Remember the latest callback.
+  React.useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+    return () => {};
+  }, [delay]);
+}
+```
+
+## License
+
+MIT license, Copyright (c) 2019 Dinesh Pandiyan.
