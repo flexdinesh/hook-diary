@@ -26,7 +26,7 @@ If you want to add your hook to this repo, create a PR with the following info.
 
 ### useFormField
 
-Author - [Dinesh Pandiyan](https://github.com/flexdinesh)
+Author - [Dinesh Pandiyan](https://twitter.com/flexdinesh)
 
 ```js
 import { useState } from 'react';
@@ -46,27 +46,47 @@ export default useFormField;
 
 ### useLoading
 
-Utility to wrap async calls and get their loading status.
+Wrap async calls and get their loading status.
 
-Author - [Shawn Wang](https://github.com/sw-yx)
+Author - [Shawn Wang](https://twitter.com/swyx)
 
 ```js
 export default function useLoading() {
   const [isLoading, setState] = React.useState(false);
 
-  const load = aPromise => {
+  const load = (aPromise) => {
     setState(true);
     return aPromise
-    .then((...args) => {
-      setState(false);
-      return Promise.resolve(...args);
-    })
-    .catch((...args) => {
-      setState(false);
-      return Promise.reject(...args);
-    })
-  }
+      .then((...args) => {
+        setState(false);
+        return Promise.resolve(...args);
+      })
+      .catch((...args) => {
+        setState(false);
+        return Promise.reject(...args);
+      });
+  };
 
   return [isLoading, load];
+}
+```
+
+### useWindowWidth
+
+Get current width from the `window` object.
+
+Author - [Alex Anderson](https://twitter.com/ralex1993)
+
+```js
+export default function useWindowWidth() {
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const resize = () => setWindowWidth(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  });
+
+  return windowWidth;
 }
 ```
